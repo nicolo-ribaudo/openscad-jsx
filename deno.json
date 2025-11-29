@@ -1,0 +1,8 @@
+{
+  "workspace": ["./openscad-jsx"],
+  "compilerOptions": {
+    "jsx": "react",
+    "jsxFactory": "jsx",
+    "jsxFragmentFactory": "Fragment"
+  }
+}
