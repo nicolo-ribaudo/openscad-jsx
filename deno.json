@@ -1,8 +1,9 @@
 {
-  "workspace": ["./openscad-jsx"],
-  "compilerOptions": {
-    "jsx": "react",
-    "jsxFactory": "jsx",
-    "jsxFragmentFactory": "Fragment"
+  "name": "@nic/openscad-jsx",
+  "version": "0.0.1",
+  "exports": {
+    ".": "./mod.ts",
+    "./deno": "./deno.ts",
+    "./jsx-runtime": "./jsx.ts"
   }
 }
