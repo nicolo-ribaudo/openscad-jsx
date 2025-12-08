@@ -51,4 +51,4 @@ export function renderToString(element: JSX.Element): string {
   return renderToString((type as (props: object) => JSX.Element)(props));
 }
 
-export type { ComponentChildren } from "./types.ts";
+export type { ComponentChildren, JSX } from "./types.ts";
