@@ -125,9 +125,12 @@ export class Rectangle extends IntrinsicCADElement<{
   }
 }
 
-export class Circle extends IntrinsicCADElement<{ r: number }> {
+export class Circle extends IntrinsicCADElement<{ r: number; $fn?: number }> {
   override renderToString(): string {
-    return apply("circle", [this.props.r]);
+    return apply("circle", [
+      this.props.r,
+      this.props.$fn ? `$fn=${this.props.$fn}` : null,
+    ]);
   }
 }
 
