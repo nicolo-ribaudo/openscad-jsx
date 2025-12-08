@@ -16,8 +16,6 @@ export async function renderToImage(element: JSX.Element) {
 export async function renderToSTL(element: JSX.Element) {
   const stl = await renderTo("asciistl", element);
 
-  Deno.writeFileSync("out.stl", stl);
-
   if (Deno.jupyter) {
     return Object.defineProperty(stl, Deno.jupyter.$display, {
       value: () => stlToHTML(stl),
