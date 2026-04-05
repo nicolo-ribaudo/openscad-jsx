@@ -1,6 +1,7 @@
 import type { JSX } from "./types.ts";
 
 import IntrinsicCADElement, * as intrinsics from "./intrinsics.ts";
+export { IntrinsicCADElement };
 
 const aliases: {
   [Type in keyof JSX.IntrinsicElements]: {

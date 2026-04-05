@@ -69,18 +69,25 @@ type OneOrTwoRadius<T extends object> =
   | (T & { r?: never; topRadius: number; bottomRadius: number });
 
 export class Cylinder extends IntrinsicCADElement<
-  OneOrTwoRadius<{ h: number; center?: boolean }>
+  OneOrTwoRadius<{ h: number; center?: boolean; $fn?: number }>
 > {
   override renderToString(): string {
-    const { r, topRadius, bottomRadius, h, center } = this.props;
+    const { r, topRadius, bottomRadius, h, center, $fn } = this.props;
     if (r !== undefined) {
       return apply("cylinder", [
         `h=${h}`,
         `r=${r}`,
         center ? `center=true` : null,
+        $fn ? `$fn=${$fn}` : null,
       ]);
     } else {
-      return apply("cylinder", [h, bottomRadius, topRadius, center || null]);
+      return apply("cylinder", [
+        h,
+        bottomRadius,
+        topRadius,
+        center ? `center=true` : null,
+        $fn ? `$fn=${$fn}` : null,
+      ]);
     }
   }
 }
@@ -265,14 +272,14 @@ export class Resize extends IntrinsicCADElement<
 
 export class Rotate extends IntrinsicCADElement<{
   by: number;
-  axis: [number, number, number];
+  axis?: [number, number, number];
   children: ComponentChildren;
 }> {
   override renderToString(renderChild: (child: JSX.Element) => string): string {
     const { by, axis, children } = this.props;
     return apply(
       "rotate",
-      [by, `[${axis[0]},${axis[1]},${axis[2]}]`],
+      [by, axis ? `[${axis[0]},${axis[1]},${axis[2]}]` : null],
       renderElementsList(children, renderChild)
     );
   }
