@@ -16,7 +16,7 @@ export default abstract class IntrinsicCADElement<Props extends object> {
 
 function renderElementsList(
   elements: ComponentChildren,
-  renderElement: (child: JSX.Element) => string
+  renderElement: (child: JSX.Element) => string,
 ): string {
   return Array.isArray(elements)
     ? "{" + elements.map(renderElement).join("") + "}"
@@ -26,7 +26,7 @@ function renderElementsList(
 function apply(
   name: string,
   params: (string | number | boolean | null)[],
-  child: string = ";"
+  child: string = ";",
 ): string {
   const filtered = params.filter((p) => p !== null);
   return `${name}(${filtered.join(",")})${child}`;
@@ -164,7 +164,7 @@ export class Projection extends IntrinsicCADElement<{
     return apply(
       "projection",
       [cut ? "cut=true" : null],
-      renderChild(this.props.children)
+      renderChild(this.props.children),
     );
   }
 }
@@ -194,7 +194,7 @@ export class ExtrusionLinear extends IntrinsicCADElement<{
         segments !== undefined ? `segments=${segments}` : null,
         convexity !== undefined ? `convexity=${convexity}` : null,
       ],
-      renderChild(children)
+      renderChild(children),
     );
   }
 }
@@ -213,7 +213,7 @@ export class ExtrusionRotational extends IntrinsicCADElement<{
         angle !== undefined ? `angle=${angle}` : null,
         convexity !== undefined ? `convexity=${convexity}` : null,
       ],
-      renderChild(children)
+      renderChild(children),
     );
   }
 }
@@ -233,7 +233,7 @@ export class Scale extends IntrinsicCADElement<{
     return apply(
       "scale",
       [`[${x},${y},${z}]`],
-      renderElementsList(children, renderChild)
+      renderElementsList(children, renderChild),
     );
   }
 }
@@ -265,7 +265,7 @@ export class Resize extends IntrinsicCADElement<
         `[${this.#newsize(x)},${this.#newsize(y)},${this.#newsize(z)}]`,
         `auto=[${this.#auto(x)},${this.#auto(y)},${this.#auto(z)}]`,
       ],
-      renderElementsList(children, renderChild)
+      renderElementsList(children, renderChild),
     );
   }
 }
@@ -280,7 +280,7 @@ export class Rotate extends IntrinsicCADElement<{
     return apply(
       "rotate",
       [by, axis ? `[${axis[0]},${axis[1]},${axis[2]}]` : null],
-      renderElementsList(children, renderChild)
+      renderElementsList(children, renderChild),
     );
   }
 }
@@ -299,7 +299,7 @@ export class RotateXYZ extends IntrinsicCADElement<
     return apply(
       "rotate",
       [`[${x},${y},${z}]`],
-      renderElementsList(children, renderChild)
+      renderElementsList(children, renderChild),
     );
   }
 }
@@ -318,7 +318,7 @@ export class Translate extends IntrinsicCADElement<
     return apply(
       "translate",
       [`[${x},${y},${z}]`],
-      renderElementsList(children, renderChild)
+      renderElementsList(children, renderChild),
     );
   }
 }
@@ -332,7 +332,7 @@ export class Mirror extends IntrinsicCADElement<{
     return apply(
       "mirror",
       [`[${plane[0]},${plane[1]},${plane[2]}]`],
-      renderElementsList(children, renderChild)
+      renderElementsList(children, renderChild),
     );
   }
 }
@@ -342,7 +342,7 @@ export class Multiply extends IntrinsicCADElement<{
     [number, number, number, number],
     [number, number, number, number],
     [number, number, number, number],
-    [number, number, number, number]
+    [number, number, number, number],
   ];
   children: ComponentChildren;
 }> {
@@ -352,7 +352,7 @@ export class Multiply extends IntrinsicCADElement<{
     return apply(
       "multmatrix",
       [`m=[${matrixStr}]`],
-      renderElementsList(children, renderChild)
+      renderElementsList(children, renderChild),
     );
   }
 }
@@ -374,7 +374,7 @@ export class Color extends IntrinsicCADElement<
         name !== undefined ? `"${name}"` : `c=[${r},${g},${b}]`,
         a !== undefined && a < 1 ? `a=${a}` : null,
       ],
-      renderElementsList(children, renderChild)
+      renderElementsList(children, renderChild),
     );
   }
 }
@@ -389,7 +389,7 @@ export class Offset extends IntrinsicCADElement<{
     return apply(
       "offset",
       [r, chamfer ? "chamfer=true" : null],
-      renderElementsList(children, renderChild)
+      renderElementsList(children, renderChild),
     );
   }
 }
@@ -399,7 +399,7 @@ export class Offset extends IntrinsicCADElement<{
 \*====================================================================*/
 
 abstract class CompositeIntrinsicCADElement<
-  Props extends { children: JSX.Element[] } = { children: JSX.Element[] }
+  Props extends { children: JSX.Element[] } = { children: JSX.Element[] },
 > extends IntrinsicCADElement<Props> {
   abstract get operatorName(): string;
 
@@ -408,7 +408,7 @@ abstract class CompositeIntrinsicCADElement<
     return apply(
       this.operatorName,
       [],
-      renderElementsList(children, renderChild)
+      renderElementsList(children, renderChild),
     );
   }
 }
@@ -426,7 +426,7 @@ export class Intersection extends CompositeIntrinsicCADElement {
 }
 
 export class Difference extends CompositeIntrinsicCADElement<{
-  children: [JSX.Element, JSX.Element];
+  children: [JSX.Element, JSX.Element, ...JSX.Element[]];
 }> {
   override get operatorName(): string {
     return "difference";
