@@ -34,6 +34,7 @@ export declare namespace JSX {
     mirror: IntrinsicProps<intrinsics.Mirror>;
     multiply: IntrinsicProps<intrinsics.Multiply>;
     offset: IntrinsicProps<intrinsics.Offset>;
+    polyhedron: IntrinsicProps<intrinsics.Polyhedron>;
     projection: IntrinsicProps<intrinsics.Projection>;
     rectangle: IntrinsicProps<intrinsics.Rectangle>;
     regularPolygon: IntrinsicProps<intrinsics.RegularPolygon>;

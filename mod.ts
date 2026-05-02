@@ -22,6 +22,7 @@ const aliases: {
   mirror: intrinsics.Mirror,
   multiply: intrinsics.Multiply,
   offset: intrinsics.Offset,
+  polyhedron: intrinsics.Polyhedron,
   projection: intrinsics.Projection,
   rectangle: intrinsics.Rectangle,
   regularPolygon: intrinsics.RegularPolygon,
@@ -44,7 +45,7 @@ export function renderToString(element: JSX.Element): string {
 
   if (type.prototype instanceof IntrinsicCADElement) {
     const instance = new (type as new (
-      props: object
+      props: object,
     ) => IntrinsicCADElement<object>)(props);
     return instance.renderToString(renderToString);
   }

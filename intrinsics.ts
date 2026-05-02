@@ -107,6 +107,25 @@ export class RegularPrism extends IntrinsicCADElement<
   }
 }
 
+export class Polyhedron extends IntrinsicCADElement<{
+  points: [number, number, number][];
+  children: (...points: number[]) => number[][];
+}> {
+  override renderToString(): string {
+    const { points, children } = this.props;
+    const pointsStr = points.map((p) => `[${p[0]},${p[1]},${p[2]}]`).join(",");
+    const facesStr = children(
+      ...Array.from({ length: points.length }, (_, i) => i),
+    )
+      .map((f) => `[${f.join(",")}]`)
+      .join(",");
+    return apply("polyhedron", [
+      `points=[${pointsStr}]`,
+      `faces=[${facesStr}]`,
+    ]);
+  }
+}
+
 /*====================================================================*\
 |                               2D shapes                              |
 \*====================================================================*/
