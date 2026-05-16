@@ -1,10 +1,13 @@
 {
   "name": "@nic/openscad-jsx",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "exports": {
     ".": "./mod.ts",
     "./deno": "./deno.ts",
     "./jsx-runtime": "./jsx.ts"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "publish": {
+    "exclude": ["./examples"]
+  }
 }
