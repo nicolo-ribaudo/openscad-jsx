@@ -1,5 +1,8 @@
 {
   "deno.enable": true,
   "editor.defaultFormatter": "denoland.vscode-deno",
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "[scad]": {
+    "editor.defaultFormatter": "JulianGmp.openscad-formatter"
+  }
 }
