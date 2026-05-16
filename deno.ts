@@ -10,7 +10,9 @@ function jupyterEnabled() {
   }
 }
 
-export async function renderToImage(element: JSX.Element) {
+export async function renderToImage(
+  element: JSX.Element,
+): Promise<Uint8Array<ArrayBuffer>> {
   const png = await renderTo("png", element);
 
   if (jupyterEnabled()) {
@@ -22,7 +24,9 @@ export async function renderToImage(element: JSX.Element) {
   return png;
 }
 
-export async function renderToSTL(element: JSX.Element) {
+export async function renderToSTL(
+  element: JSX.Element,
+): Promise<Uint8Array<ArrayBuffer>> {
   const stl = await renderTo("asciistl", element);
 
   if (jupyterEnabled()) {

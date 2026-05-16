@@ -7,7 +7,7 @@ export default abstract class IntrinsicCADElement<Props extends object> {
     this.#props = props;
   }
 
-  get props() {
+  get props(): Props {
     return this.#props;
   }
 

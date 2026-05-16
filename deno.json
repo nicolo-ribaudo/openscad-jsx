@@ -5,5 +5,6 @@
     ".": "./mod.ts",
     "./deno": "./deno.ts",
     "./jsx-runtime": "./jsx.ts"
-  }
+  },
+  "license": "MIT"
 }
