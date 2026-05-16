@@ -1,10 +1,19 @@
 import { renderToString } from "./mod.ts";
 import type { JSX } from "./types.ts";
 
+function jupyterEnabled() {
+  try {
+    return !!Deno.jupyter;
+  } catch {
+    // Deno.jyputer is a getter that throws if not enabled
+    return false;
+  }
+}
+
 export async function renderToImage(element: JSX.Element) {
   const png = await renderTo("png", element);
 
-  if (Deno.jupyter) {
+  if (jupyterEnabled()) {
     return Object.defineProperty(png, Deno.jupyter.$display, {
       value: () => ({ "image/png": png.toBase64() }),
       enumerable: true,
@@ -16,7 +25,7 @@ export async function renderToImage(element: JSX.Element) {
 export async function renderToSTL(element: JSX.Element) {
   const stl = await renderTo("asciistl", element);
 
-  if (Deno.jupyter) {
+  if (jupyterEnabled()) {
     return Object.defineProperty(stl, Deno.jupyter.$display, {
       value: () => stlToHTML(stl),
       enumerable: true,
@@ -27,7 +36,7 @@ export async function renderToSTL(element: JSX.Element) {
 
 async function renderTo(
   format: "png" | "asciistl" | "binstl",
-  element: JSX.Element
+  element: JSX.Element,
 ) {
   const child = new Deno.Command("openscad", {
     args: ["-o", "-", "--export-format", format, "-"],
@@ -47,7 +56,7 @@ async function renderTo(
   if (!out.success) {
     throw new Error(
       `OpenSCAD failed with code ${out.code}:\n` +
-        new TextDecoder().decode(out.stderr)
+        new TextDecoder().decode(out.stderr),
     );
   }
 
