@@ -170,6 +170,16 @@ export class RegularPolygon extends IntrinsicCADElement<{
   }
 }
 
+export class Polygon extends IntrinsicCADElement<{
+  points: readonly (readonly [number, number])[];
+}> {
+  override renderToString(): string {
+    const { points } = this.props;
+    const pointsStr = points.map((p) => `[${p[0]},${p[1]}]`).join(",");
+    return apply("polygon", [`points=[${pointsStr}]`]);
+  }
+}
+
 /*====================================================================*\
 |                               3D <-> 2D                              |
 \*====================================================================*/

@@ -22,6 +22,7 @@ const aliases: {
   mirror: intrinsics.Mirror,
   multiply: intrinsics.Multiply,
   offset: intrinsics.Offset,
+  polygon: intrinsics.Polygon,
   polyhedron: intrinsics.Polyhedron,
   projection: intrinsics.Projection,
   rectangle: intrinsics.Rectangle,
@@ -38,6 +39,8 @@ const aliases: {
 };
 
 export function renderToString(element: JSX.Element): string {
+  if (element == null) return "";
+
   let { type, props } = element;
   if (typeof type === "string") {
     type = aliases[type] as typeof IntrinsicCADElement;
